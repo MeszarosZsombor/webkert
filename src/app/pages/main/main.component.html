@@ -6,7 +6,7 @@
       </mat-card-header>
       <mat-card-content>
         <p>{{ package.description }}</p>
-        <p>{{ package.price }} Ft</p>
+        <p>{{ package.price | priceFormat}} </p>
       </mat-card-content>
       <mat-card-actions>
         <dialog-animations></dialog-animations>

@@ -3,25 +3,22 @@ import { CommonModule } from '@angular/common';
 
 import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
-import {MatCard, MatCardModule, MatCardActions, MatCardContent, MatCardHeader} from "@angular/material/card";
-import {MatButton} from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatButtonModule } from "@angular/material/button";
 import {DialogAnimationsExample} from "../../shared/dialog/dialog.component";
-
+import {PriceFormatPipe} from "../../shared/pipe/price-format.pipe";
 
 @NgModule({
   declarations: [
-    MainComponent
+    MainComponent,
+    PriceFormatPipe
   ],
-    imports: [
-        CommonModule,
-        MainRoutingModule,
-        MatCard,
-        MatCardHeader,
-        MatCardContent,
-        MatCardActions,
-        MatCardModule,
-        MatButton,
-        DialogAnimationsExample
-    ]
+  imports: [
+    CommonModule,
+    MainRoutingModule,
+    MatCardModule,
+    MatButtonModule,
+    DialogAnimationsExample
+  ]
 })
 export class MainModule { }

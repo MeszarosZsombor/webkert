@@ -7,7 +7,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
-import { MenuComponent } from './shared/menu/menu/menu.component';
+import { MenuComponent } from './shared/menu/menu.component';
 import {MatListItem, MatNavList} from "@angular/material/list";
 import {MatButtonModule} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
@@ -18,32 +18,37 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import {environment} from "./environment/environment";
 import {AngularFireModule} from "@angular/fire/compat";
+import { PriceFormatPipe } from './shared/pipe/price-format.pipe';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MenuComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    AppRoutingModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatIcon,
-    MatNavList,
-    MatButtonModule,
-    MatListItem,
-    DialogAnimationsExample,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
-  ],
-  providers: [
-    provideClientHydration(),
-    provideAnimationsAsync()
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        MenuComponent,
+        PriceFormatPipe
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AppRoutingModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatIcon,
+        MatNavList,
+        MatButtonModule,
+        MatListItem,
+        DialogAnimationsExample,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        provideAuth(() => getAuth()),
+        provideFirestore(() => getFirestore()),
+        provideStorage(() => getStorage())
+    ],
+    providers: [
+        provideClientHydration(),
+        provideAnimationsAsync()
+    ],
+    exports: [
+        PriceFormatPipe
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
