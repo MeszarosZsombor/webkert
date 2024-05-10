@@ -1,14 +1,16 @@
 <div class="main_component">
   <div class="flex-end">
-    <h1>Felhasználói fiók regisztrációja</h1>
+    <h1>Felhasználói fiók regisztráció</h1>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <mat-form-field>
+          <mat-icon matPrefix>email</mat-icon>
           <mat-label>Email cím</mat-label>
           <input matInput type="text" placeholder="valami@email.com" formControlName="email" class="form-control" required>
           <mat-error *ngIf="registerForm.controls['email'].invalid">{{errorMessages.email}}</mat-error>
         </mat-form-field>
         <mat-form-field>
+          <mat-icon matPrefix>person</mat-icon>
           <mat-label>Felhasználónév</mat-label>
           <input matInput type="text" formControlName="username" class="form-control" required />
           <mat-error *ngIf="registerForm.controls['username'].invalid">{{errorMessages.name}}</mat-error>
@@ -22,6 +24,7 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field>
+            <mat-icon matPrefix>lock</mat-icon>
             <input matInput type="password" formControlName="repassword" class="form-control" required>
             <mat-label>Jelszó megerősítése</mat-label>
             <mat-error *ngIf="registerForm.controls['repassword'].invalid || registerForm.hasError('mismatch')">
@@ -29,11 +32,13 @@
         </mat-error>
         </mat-form-field>
         <mat-form-field>
+          <mat-icon matPrefix>face</mat-icon>
           <mat-label>Név</mat-label>
           <input matInput type="text" formControlName="name" class="form-control" required />
           <mat-error *ngIf="registerForm.controls['name'].invalid">{{errorMessages.name}}</mat-error>
         </mat-form-field>
         <mat-form-field>
+          <mat-icon matPrefix>phone</mat-icon>
           <mat-label>Telefonszám</mat-label>
           <input matInput type="text" formControlName="phone" class="form-control" />
           <mat-error *ngIf="registerForm.controls['phone'].invalid">{{errorMessages.phone}}</mat-error>

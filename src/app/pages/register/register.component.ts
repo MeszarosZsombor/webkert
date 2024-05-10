@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import {FormControl, FormGroup, ValidationErrors, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {merge} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
-import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-register',

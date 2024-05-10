@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "webkert-a271a": {
+      "hosting": {
+        "webkert": [
+          "webkert-a271a"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "webkert-a271a"
+  }
+}

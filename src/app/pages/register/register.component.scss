@@ -11,18 +11,13 @@ div {
 }
 
 form div {
-  padding: 5px 5px 5px 5px;
+  padding: 5px;
 }
 
 form {
   display: inline-grid;
-  width: 50%;
+  width: 20%;
   align-self: center;
-}
-
-.subForm {
-  width: 100%;
-  display: inline-grid;
 }
 
 .button {
