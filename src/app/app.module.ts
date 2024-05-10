@@ -12,19 +12,16 @@ import {MatListItem, MatNavList} from "@angular/material/list";
 import {MatButtonModule} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
 import { DialogAnimationsExample } from "./shared/dialog/dialog.component";
-import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import {environment} from "./environment/environment";
 import {AngularFireModule} from "@angular/fire/compat";
-import { PriceFormatPipe } from './shared/pipe/price-format.pipe';
 
 @NgModule({
     declarations: [
         AppComponent,
-        MenuComponent,
-        PriceFormatPipe
+        MenuComponent
     ],
     imports: [
         BrowserModule,
@@ -45,9 +42,6 @@ import { PriceFormatPipe } from './shared/pipe/price-format.pipe';
     providers: [
         provideClientHydration(),
         provideAnimationsAsync()
-    ],
-    exports: [
-        PriceFormatPipe
     ],
     bootstrap: [AppComponent]
 })

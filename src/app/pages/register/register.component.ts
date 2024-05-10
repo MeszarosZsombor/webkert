@@ -4,6 +4,8 @@ import {merge} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {Router} from "@angular/router";
 import {AuthService} from "../../shared/services/auth.service";
+import {User} from "../../shared/models/User";
+import {UserService} from "../../shared/services/user.service";
 
 @Component({
   selector: 'app-register',
@@ -23,7 +25,7 @@ export class RegisterComponent {
     phone: ''
   };
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private userService: UserService) {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -80,6 +82,22 @@ export class RegisterComponent {
   async register() {
     await this.authService.register(this.registerForm.value?.email, this.registerForm.value?.password).then(cred => {
       console.log(cred);
+
+      const user: User = {
+        id: cred.user?.uid as string,
+        email: this.registerForm.value.email,
+        username: this.registerForm.value.username,
+        name: this.registerForm.value.name,
+        phone: this.registerForm.value.phone,
+        package: null
+      };
+
+      this.userService.create(user).then(_ => {
+        console.log('User created');
+      }).catch(err => {
+        console.error(err);
+      });
+
       this.router.navigateByUrl('/main');
     }).catch(err => {
       console.error(err);
