@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {merge} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {Router} from "@angular/router";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -21,7 +23,7 @@ export class RegisterComponent {
     phone: ''
   };
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService) {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -34,10 +36,6 @@ export class RegisterComponent {
     merge(this.registerForm.statusChanges, this.registerForm.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
-  }
-
-  onSubmit() {
-    console.log(this.registerForm.value);
   }
 
   passwordMatchValidator(g: FormGroup) {
@@ -77,5 +75,14 @@ export class RegisterComponent {
       default:
         return '';
     }
+  }
+
+  async register() {
+    await this.authService.register(this.registerForm.value?.email, this.registerForm.value?.password).then(cred => {
+      console.log(cred);
+      this.router.navigateByUrl('/main');
+    }).catch(err => {
+      console.error(err);
+    });
   }
 }

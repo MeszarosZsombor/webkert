@@ -16,6 +16,8 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
+import {environment} from "./environment/environment";
+import {AngularFireModule} from "@angular/fire/compat";
 
 @NgModule({
   declarations: [
@@ -33,7 +35,7 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
     MatButtonModule,
     MatListItem,
     DialogAnimationsExample,
-    provideFirebaseApp(() => initializeApp({"projectId":"webkert-a271a","appId":"1:319911206972:web:0dd94d054d24201ef66339","storageBucket":"webkert-a271a.appspot.com","apiKey":"AIzaSyDagB4relqujl-scQ-zKrPEde4M2Sri8x8","authDomain":"webkert-a271a.firebaseapp.com","messagingSenderId":"319911206972","measurementId":"G-5K5Z51132X"})),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage())

@@ -1,6 +1,6 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav>
-    <app-menu (selectedPage)="changePage($event)" [currentPage]="page" *ngIf="page" (onCloseSidenav)="onClose($event, sidenav)"></app-menu>
+    <app-menu (selectedPage)="changePage($event)" [currentPage]="page" *ngIf="page" (onCloseSidenav)="onClose($event, sidenav)" [loggedInUser]="loggedInUser" (onLogout)="logout($event)"></app-menu>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -12,10 +12,11 @@
       <div>Telepont</div>
       <div class="navigation-wrapper">
         <ul class="navigation-items">
-          <li><a routerLink="/login">Bejelentkezés</a></li>
-          <li><a routerLink="/register">Regisztráció</a></li>
+          <li *ngIf="!loggedInUser"><a routerLink="/login">Bejelentkezés</a></li>
+          <li *ngIf="loggedInUser"><a routerLink="/login" (click)="logout()">Kijelentkezés</a></li>
+          <li *ngIf="!loggedInUser"><a routerLink="/register">Regisztráció</a></li>
           <li><a routerLink="/main">Főoldal</a></li>
-          <li><a routerLink="/account">Fiókom</a></li>
+          <li *ngIf="loggedInUser"><a routerLink="/account">Fiókom</a></li>
         </ul>
       </div>
     </mat-toolbar>

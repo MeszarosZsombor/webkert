@@ -1,7 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, PLATFORM_ID} from '@angular/core';
 import {MatSidenav} from "@angular/material/sidenav";
 import {Router, NavigationEnd} from "@angular/router";
 import {filter} from "rxjs";
+import {AuthService} from "./shared/services/auth.service";
+import {extractRoutes} from "@angular-devkit/build-angular/src/utils/routes-extractor/extractor";
+import {isPlatformBrowser} from "@angular/common";
 
 @Component({
   selector: 'app-root',
@@ -12,8 +15,9 @@ export class AppComponent implements OnInit {
   title = 'webkert';
   page = 'main';
   routes: Array<string> = [];
+  loggedInUser?: firebase.default.User | null;
 
-  constructor(private router: Router) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private authService: AuthService) {
   }
 
   onToggleSidenav(sidenav: MatSidenav) {
@@ -29,6 +33,18 @@ export class AppComponent implements OnInit {
         this.page = currentPage;
       }
     });
+    this.authService.isUserLoggedIn().subscribe(user => {
+      console.log(user);
+      this.loggedInUser = user;
+      if (isPlatformBrowser(this.platformId)) {
+        localStorage.setItem('user', JSON.stringify(this.loggedInUser));
+      }
+    }, error => {
+      console.error(error);
+      if (isPlatformBrowser(this.platformId)) {
+        localStorage.setItem('user', JSON.stringify('null'));
+      }
+    });
   }
 
   changePage(selectedPage: string) {
@@ -39,5 +55,13 @@ export class AppComponent implements OnInit {
     if (event === true) {
       sidenav.close();
     }
+  }
+
+  logout(_?: boolean) {
+    this.authService.logout().then(() => {
+      this.router.navigateByUrl('/login');
+    }).catch(err => {
+      console.error(err);
+    });
   }
 }

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {merge} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
+import {AuthService} from "../../shared/services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -11,7 +13,7 @@ import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router){
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.email, Validators.required]],
       password: ['', Validators.required]
@@ -30,7 +32,7 @@ export class LoginComponent {
   private updateErrorMessage() {
     Object.keys(this.loginForm.controls).forEach(key => {
       // @ts-ignore
-      const controlErrors: ValidationErrors = this.registerForm.get(key).errors;
+      const controlErrors: ValidationErrors = this.loginForm.get(key).errors;
       if (controlErrors != null) {
         Object.keys(controlErrors).forEach(keyError => {
           // @ts-ignore
@@ -40,8 +42,13 @@ export class LoginComponent {
     });
   }
 
-  login() {
-
+  async login() {
+    await this.authService.login(this.loginForm.value?.email, this.loginForm.value?.password).then(cred => {
+      console.log(cred);
+      this.router.navigateByUrl('/main');
+    }).catch(err => {
+      console.error(err);
+    });
   }
 
   private getErrorMessage(controlName: string, errorName: string) {
