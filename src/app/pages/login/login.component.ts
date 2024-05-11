@@ -44,7 +44,6 @@ export class LoginComponent {
 
   async login() {
     await this.authService.login(this.loginForm.value?.email, this.loginForm.value?.password).then(cred => {
-      console.log(cred);
       this.router.navigateByUrl('/main');
     }).catch(err => {
       console.error(err);

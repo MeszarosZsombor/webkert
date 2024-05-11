@@ -1,5 +1,5 @@
 import {Inject, Injectable, PLATFORM_ID} from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import {isPlatformBrowser} from "@angular/common";
 
@@ -7,7 +7,7 @@ import {isPlatformBrowser} from "@angular/common";
   providedIn: 'root'
 })
 export class AuthGuard {
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router) {
   }
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -17,6 +17,9 @@ export class AuthGuard {
       const user = JSON.parse(localStorage.getItem('user') as string);
       if (user) {
         return true;
+      } else {
+        this.router.navigate(['/main']);
+        return false;
       }
     }
     return false;

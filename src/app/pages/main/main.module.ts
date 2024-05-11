@@ -5,7 +5,7 @@ import { MainRoutingModule } from './main-routing.module';
 import { MainComponent } from './main.component';
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
-import {DialogAnimationsExample} from "../../shared/dialog/dialog.component";
+import {BuyPackageDialogAnimations} from "../../shared/dialog/dialog.component";
 import {PriceFormatPipe} from "../../shared/pipe/price-format.pipe";
 
 @NgModule({
@@ -18,7 +18,7 @@ import {PriceFormatPipe} from "../../shared/pipe/price-format.pipe";
     MainRoutingModule,
     MatCardModule,
     MatButtonModule,
-    DialogAnimationsExample
+    BuyPackageDialogAnimations
   ]
 })
 export class MainModule { }

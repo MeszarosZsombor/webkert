@@ -4,5 +4,5 @@ export interface User {
   username: string;
   email: string;
   phone: string;
-  package: number | null;
+  package: string | null;
 }

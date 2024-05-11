@@ -1,15 +1,15 @@
 <div class="main_component">
-  <div class="package" *ngFor="let package of packages">
+  <div class="package" *ngFor="let phonePackage of packages | async">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{ package.title }}</mat-card-title>
+        <mat-card-title>{{ phonePackage.title }}</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <p>{{ package.description }}</p>
-        <p>{{ package.price | priceFormat}} </p>
+        <p>{{ phonePackage.description }}</p>
+        <p>{{ phonePackage.price | priceFormat}} </p>
       </mat-card-content>
       <mat-card-actions>
-        <dialog-animations></dialog-animations>
+        <dialog-animations [phonePackage]="phonePackage" (buy)="buyPackage($event)" ></dialog-animations>
       </mat-card-actions>
     </mat-card>
   </div>

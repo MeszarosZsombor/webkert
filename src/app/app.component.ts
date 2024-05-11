@@ -60,6 +60,7 @@ export class AppComponent implements OnInit {
   logout(_?: boolean) {
     this.authService.logout().then(() => {
       this.router.navigateByUrl('/login');
+      localStorage.removeItem('user');
     }).catch(err => {
       console.error(err);
     });

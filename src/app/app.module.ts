@@ -11,7 +11,7 @@ import { MenuComponent } from './shared/menu/menu.component';
 import {MatListItem, MatNavList} from "@angular/material/list";
 import {MatButtonModule} from "@angular/material/button";
 import {HttpClientModule} from "@angular/common/http";
-import { DialogAnimationsExample } from "./shared/dialog/dialog.component";
+import { BuyPackageDialogAnimations } from "./shared/dialog/dialog.component";
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
@@ -33,7 +33,7 @@ import {AngularFireModule} from "@angular/fire/compat";
         MatNavList,
         MatButtonModule,
         MatListItem,
-        DialogAnimationsExample,
+        BuyPackageDialogAnimations,
         AngularFireModule.initializeApp(environment.firebaseConfig),
         provideAuth(() => getAuth()),
         provideFirestore(() => getFirestore()),
