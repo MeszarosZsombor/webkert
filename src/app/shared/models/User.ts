@@ -5,4 +5,5 @@ export interface User {
   email: string;
   phone: string;
   package: string | null;
+  bonuses: string[];
 }

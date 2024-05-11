@@ -9,7 +9,7 @@ import { MatDialog } from "@angular/material/dialog";
 })
 export class PackageService {
 
-  packages: Package[] = []
+  packages: Package[] = [];
 
   collection = "Packages";
 
@@ -22,9 +22,4 @@ export class PackageService {
   getById(id: string){
     return this.afs.collection<Package>(this.collection).doc(id).valueChanges();
   }
-
-  buyPackage(phonePackage: Package) {
-
-  }
-
 }

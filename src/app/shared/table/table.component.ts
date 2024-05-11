@@ -1,8 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatTableModule, MatTableDataSource} from '@angular/material/table';
 import {MainModule} from "../../pages/main/main.module";
 import {SelectionModel} from "@angular/cdk/collections";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {Bonuses} from "../models/Bonuses";
+import {BonusesService} from "../services/bonuses.service";
 
 export interface Transaction {
   item: string;
@@ -20,24 +22,20 @@ export interface Transaction {
   standalone: true,
   imports: [MatTableModule, MainModule, MatCheckboxModule],
 })
-export class TableStickyFooterExample {
+export class TableStickyFooterExample implements OnInit {
   displayedColumns = ['item', 'cost', 'select'];
 
-  transactions: Transaction[] = [
-    {item: 'Beach ball', cost: 4, position: 0},
-    {item: 'Towel', cost: 5, position: 1},
-    {item: 'Frisbee', cost: 2, position: 2},
-    {item: 'Sunscreen', cost: 4, position: 3},
-    {item: 'Cooler', cost: 25, position: 4},
-    {item: 'Swim suit', cost: 15, position: 5},
-  ];
+  bonuses: Bonuses[] = []; // Initialize bonuses array
 
-  dataSource = new MatTableDataSource<Transaction>(this.transactions);
-  selection = new SelectionModel<Transaction>(true, []);
+  dataSource = new MatTableDataSource<Bonuses>(this.bonuses); // Use Bonus interface
+  selection = new SelectionModel<Bonuses>(true, []); // Use Bonus interface
+
+  constructor(private bonusesService: BonusesService) {}
 
   /** Gets the total cost of all transactions. */
   getTotalCost() {
-    return this.selection.selected.map(t => t.cost).reduce((acc, value) => acc + value, 0);
+    console.log(typeof (this.selection.selected.map(t => t.price).reduce((acc, value) => acc + value, 0)));
+    return this.selection.selected.map(t => t.price).reduce((acc, value) => acc + value, 0);
   }
 
   /** Whether the number of selected elements matches the total number of rows. */
@@ -58,10 +56,17 @@ export class TableStickyFooterExample {
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Transaction): string {
+  checkboxLabel(row?: Bonuses): string {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${Number(row.id)}`;
+  }
+
+  ngOnInit() {
+    this.bonusesService.getAll().subscribe(bonuses => {
+      this.bonuses = bonuses;
+      this.dataSource = new MatTableDataSource<Bonuses>(this.bonuses);
+    });
   }
 }

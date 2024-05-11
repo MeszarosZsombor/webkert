@@ -89,7 +89,8 @@ export class RegisterComponent {
         username: this.registerForm.value.username,
         name: this.registerForm.value.name,
         phone: this.registerForm.value.phone,
-        package: null
+        package: null,
+        bonuses: []
       };
 
       this.userService.create(user).then(_ => {

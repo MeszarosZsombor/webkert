@@ -9,6 +9,7 @@ import {MatIcon} from "@angular/material/icon";
 import {DeleteDialogAnimations} from "../../shared/dialog/dialog-delete.component";
 import { BonusesComponent } from './bonuses/bonuses.component';
 import {TableStickyFooterExample} from "../../shared/table/table.component";
+import {BuyBonusesDialog} from "../../shared/dialog/dialog-buy-bonuses.component";
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {TableStickyFooterExample} from "../../shared/table/table.component";
     MatIcon,
     DeleteDialogAnimations,
     TableStickyFooterExample,
+    BuyBonusesDialog,
   ]
 })
 export class AccountModule { }
