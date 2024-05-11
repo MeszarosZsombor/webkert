@@ -8,6 +8,7 @@ import {MatButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {DeleteDialogAnimations} from "../../shared/dialog/dialog-delete.component";
 import { BonusesComponent } from './bonuses/bonuses.component';
+import {TableStickyFooterExample} from "../../shared/table/table.component";
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { BonusesComponent } from './bonuses/bonuses.component';
     MatButton,
     MatIcon,
     DeleteDialogAnimations,
+    TableStickyFooterExample,
   ]
 })
 export class AccountModule { }

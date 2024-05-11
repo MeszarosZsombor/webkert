@@ -19,6 +19,9 @@ import {PriceFormatPipe} from "../../shared/pipe/price-format.pipe";
     MatCardModule,
     MatButtonModule,
     BuyPackageDialogAnimations
+  ],
+  exports: [
+    PriceFormatPipe
   ]
 })
 export class MainModule { }
