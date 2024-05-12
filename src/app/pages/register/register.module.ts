@@ -8,20 +8,22 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 
 @NgModule({
   declarations: [
     RegisterComponent
   ],
-  imports: [
-    CommonModule,
-    RegisterRoutingModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatInputModule,
-    MatIcon
-  ]
+    imports: [
+        CommonModule,
+        RegisterRoutingModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        MatInputModule,
+        MatIcon,
+        MatProgressSpinner
+    ]
 })
 export class RegisterModule { }

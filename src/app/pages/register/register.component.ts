@@ -15,6 +15,7 @@ import {SnackBarComponent} from "../../shared/snack-bar/snack-bar.component";
 })
 export class RegisterComponent {
   registerForm: FormGroup;
+  loading: boolean = false;
 
 
   errorMessages = {
@@ -103,35 +104,41 @@ export class RegisterComponent {
   }
 
   async register() {
-    this.userService.checkEmailExists(this.registerForm.value.email).subscribe(exists => {
-      if (exists) {
-        this._snackbar.openSnackBar('Ez az email cím már regisztrálva van!', 'Rendben');
-        return;
-      }
+    this.loading = true;
+    setTimeout(async() => {
+      this.userService.checkEmailExists(this.registerForm.value.email).subscribe(exists => {
+        if (exists) {
+          this._snackbar.openSnackBar('Ez az email cím már regisztrálva van!', 'Rendben');
+          return;
+        }
 
-      this.authService.register(this.registerForm.value?.email, this.registerForm.value?.password).then(cred => {
-        console.log(cred);
+        this.authService.register(this.registerForm.value?.email, this.registerForm.value?.password).then(cred => {
+          console.log(cred);
 
-        const user: User = {
-          id: cred.user?.uid as string,
-          email: this.registerForm.value.email,
-          username: this.registerForm.value.username,
-          name: this.registerForm.value.name,
-          phone: this.registerForm.value.phone,
-          package: "",
-          bonuses: []
-        };
+          const user: User = {
+            id: cred.user?.uid as string,
+            email: this.registerForm.value.email,
+            username: this.registerForm.value.username,
+            name: this.registerForm.value.name,
+            phone: this.registerForm.value.phone,
+            package: "",
+            bonuses: []
+          };
 
-        this.userService.create(user).then(_ => {
-          this._snackbar.openSnackBar('Sikeres regisztráció!', 'Rendben');
+          this.userService.create(user).then(_ => {
+            this.loading = false;
+            this._snackbar.openSnackBar('Sikeres regisztráció!', 'Rendben');
+          }).catch(err => {
+            this.loading = false;
+            console.error(err);
+          });
+
+          this.router.navigateByUrl('/account');
         }).catch(err => {
+          this.loading = false;
           console.error(err);
         });
-
-        this.router.navigateByUrl('/account');
-      }).catch(err => {
-        console.error(err);
       });
-    });
+    }, 3000);
   }
 }

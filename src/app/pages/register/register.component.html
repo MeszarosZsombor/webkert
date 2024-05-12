@@ -1,3 +1,7 @@
+<div *ngIf="loading" class="spinner-container">
+  <mat-spinner class="spinner"></mat-spinner>
+</div>
+
 <div class="main_component">
     <div><h1>Felhasználói fiók regisztráció</h1>
     <form [formGroup]="registerForm" (ngSubmit)="register()">
