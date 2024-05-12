@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {User} from "../models/User";
 import {Bonuses} from "../models/Bonuses";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -82,5 +83,13 @@ export class UserService {
     } else {
       throw new Error('User does not exist');
     }
+  }
+
+  checkEmailExists(email: string): Observable<boolean>{
+    return new Observable<boolean>(subscriber => {
+      this.afs.collection<User>(this.collection, ref => ref.where('email', '==', email)).valueChanges().subscribe(users => {
+        subscriber.next(users.length > 0);
+      });
+    });
   }
 }

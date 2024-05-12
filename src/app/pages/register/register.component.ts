@@ -81,23 +81,23 @@ export class RegisterComponent {
   private getErrorMessage(controlName: string, errorName: string) {
     switch (controlName) {
       case 'email':
-        return errorName === 'required' ? 'Email is required' : 'Email is invalid';
+        return errorName === 'required' ? 'Email cím kötelező' : 'Hibás email cím formátum';
       case 'username':
-        return errorName === 'required' ? 'Username is required' : 'Username must be between 3 and 20 characters';
+        return errorName === 'required' ? 'Felhasználónév kötelező' : 'A felhasználónévnek 3 és 20 karakter között kell lennie';
       case 'password':
-        return errorName === 'required' ? 'Password is required' : 'Password must be at least 6 characters';
+        return errorName === 'required' ? 'Jelszó kötelező' : 'A jelszónak legalább 6 karakter hosszúnak kell lennie';
       case 'repassword':
         if (errorName === 'required') {
-          return 'Password confirmation is required';
+          return 'Megerősítési jelszó kötelező';
         } else if (errorName === 'mismatch') {
-          return 'Password confirmation does not match password';
+          return 'Megerősítési jelszó nem egyezik meg a jelszóval';
         } else {
-          return 'Password confirmation must be at least 6 characters';
+          return 'A megerősítő jelszónak legalább 6 karakter hosszúnak kell lennie';
         }
       case 'name':
-        return errorName === 'required' ? 'Name is required' : 'Name must be at least 3 characters';
+        return errorName === 'required' ? 'Név kötelező' : 'A névnek legalább 3 karakter hosszúnak kell lennie';
       case 'phone':
-        return errorName === 'required' ? 'Phone number is required' : 'Phone number must be at least 10 characters';
+        return errorName === 'required' ? 'Telefonszám kötelező' : 'A telefonnak legalább 10 karakter hosszúnak kell lennie';
       default:
         return '';
     }

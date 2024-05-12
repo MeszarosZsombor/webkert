@@ -63,9 +63,9 @@ export class LoginComponent {
   private getErrorMessage(controlName: string, errorName: string) {
     switch (controlName) {
       case 'email':
-        return errorName === 'required' ? 'Email is required' : 'Email is invalid';
+        return errorName === 'required' ? 'Email cím kötelező' : 'Hibás email cím formátum';
       case 'password':
-        return errorName === 'required' ? 'Password is required' : 'Password must be at least 6 characters';
+        return errorName === 'required' ? 'Jelszó kötelező' : 'A jelszó legalább 6 karakter hosszú kell legyen';
       default:
         return '';
     }
