@@ -17,6 +17,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import {environment} from "./environment/environment";
 import {AngularFireModule} from "@angular/fire/compat";
+import {SnackBarComponent} from "./shared/snack-bar/snack-bar.component";
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import {AngularFireModule} from "@angular/fire/compat";
     ],
     providers: [
         provideClientHydration(),
-        provideAnimationsAsync()
+        provideAnimationsAsync(),
+        SnackBarComponent
     ],
     bootstrap: [AppComponent]
 })

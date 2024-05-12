@@ -7,6 +7,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from "@angular/material/button";
 import {BuyPackageDialogAnimations} from "../../shared/dialog/dialog.component";
 import {PriceFormatPipe} from "../../shared/pipe/price-format.pipe";
+import {MatDivider} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {PriceFormatPipe} from "../../shared/pipe/price-format.pipe";
     MainRoutingModule,
     MatCardModule,
     MatButtonModule,
-    BuyPackageDialogAnimations
+    BuyPackageDialogAnimations,
+    MatDivider
   ],
   exports: [
     PriceFormatPipe

@@ -8,7 +8,7 @@ import {
   MatDialogTitle
 } from "@angular/material/dialog";
 import {Component, EventEmitter, Inject, Input, Output} from "@angular/core";
-import {User} from "../models/User";
+import { SnackBarComponent } from "../snack-bar/snack-bar.component";
 import {MatButtonModule} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 import {AuthService} from "../services/auth.service";
@@ -30,14 +30,17 @@ export class BuyBonusesAnimationsDialog {
     @Inject(MAT_DIALOG_DATA) public data: {uid: string, selectedBonuses: Bonuses[]},
     private userService: UserService,
     private authService: AuthService,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private _snackBar: SnackBarComponent
   ) {
     this.uid = data.uid;
     this.selectedBonuses = data.selectedBonuses;
   }
 
   buyBonuses(selectedBonuses: Bonuses[]) {
-    this.userService.buyBonuses(this.uid as string, selectedBonuses);
+    this.userService.buyBonuses(this.uid as string, selectedBonuses).then(() => {
+      this._snackBar.openSnackBar('Szolgáltatások sikeresen vásárolva/módosítva', 'Rendben');
+    });
   }
 }
 
