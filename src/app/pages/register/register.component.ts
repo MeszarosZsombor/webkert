@@ -72,7 +72,6 @@ export class RegisterComponent {
         Object.keys(controlErrors).forEach(keyError => {
           // @ts-ignore
           this.errorMessages[key] = this.getErrorMessage(key, keyError);
-          console.log(this.registerForm.getError('mismatch'));
         });
       }
     });
@@ -104,28 +103,35 @@ export class RegisterComponent {
   }
 
   async register() {
-    await this.authService.register(this.registerForm.value?.email, this.registerForm.value?.password).then(cred => {
-      console.log(cred);
+    this.userService.checkEmailExists(this.registerForm.value.email).subscribe(exists => {
+      if (exists) {
+        this._snackbar.openSnackBar('Ez az email cím már regisztrálva van!', 'Rendben');
+        return;
+      }
 
-      const user: User = {
-        id: cred.user?.uid as string,
-        email: this.registerForm.value.email,
-        username: this.registerForm.value.username,
-        name: this.registerForm.value.name,
-        phone: this.registerForm.value.phone,
-        package: "",
-        bonuses: []
-      };
+      this.authService.register(this.registerForm.value?.email, this.registerForm.value?.password).then(cred => {
+        console.log(cred);
 
-      this.userService.create(user).then(_ => {
-        this._snackbar.openSnackBar('Sikeres regisztráció!', 'Rendben');
+        const user: User = {
+          id: cred.user?.uid as string,
+          email: this.registerForm.value.email,
+          username: this.registerForm.value.username,
+          name: this.registerForm.value.name,
+          phone: this.registerForm.value.phone,
+          package: "",
+          bonuses: []
+        };
+
+        this.userService.create(user).then(_ => {
+          this._snackbar.openSnackBar('Sikeres regisztráció!', 'Rendben');
+        }).catch(err => {
+          console.error(err);
+        });
+
+        this.router.navigateByUrl('/account');
       }).catch(err => {
         console.error(err);
       });
-
-      this.router.navigateByUrl('/account');
-    }).catch(err => {
-      console.error(err);
     });
   }
 }
