@@ -6,10 +6,10 @@
       </mat-card-header>
       <mat-divider></mat-divider>
       <mat-card-content>
-        <p><mat-icon>face</mat-icon>{{user?.name}}</p>
-        <p><mat-icon>email</mat-icon>{{ user?.email }}</p>
-        <p><mat-icon>phone</mat-icon>{{ user?.phone }}</p>
-        <p><mat-icon>list_alt</mat-icon>{{ user?.package == "" ? "Jelenleg nincsen mobilcsomagod!" : user?.package }}</p>
+        <p><mat-icon matIconPrefix>face</mat-icon>{{user?.name}}</p>
+        <p><mat-icon matIconPrefix>email</mat-icon>{{ user?.email }}</p>
+        <p><mat-icon matIconPrefix>phone</mat-icon>{{ user?.phone }}</p>
+        <p><mat-icon matIconPrefix>list_alt</mat-icon>{{ user?.package == "" ? "Jelenleg nincsen mobilcsomagod!" : user?.package }}</p>
       </mat-card-content>
       <mat-card-actions>
         <dialog-delete></dialog-delete>

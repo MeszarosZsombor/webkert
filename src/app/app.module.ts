@@ -19,6 +19,7 @@ import {environment} from "./environment/environment";
 import {AngularFireModule} from "@angular/fire/compat";
 import {SnackBarComponent} from "./shared/snack-bar/snack-bar.component";
 import {DeleteDialogAnimations} from "./shared/dialog/dialog-delete.component";
+import {MatPrefix} from "@angular/material/form-field";
 
 @NgModule({
     declarations: [
@@ -39,7 +40,8 @@ import {DeleteDialogAnimations} from "./shared/dialog/dialog-delete.component";
         AngularFireModule.initializeApp(environment.firebaseConfig),
         provideAuth(() => getAuth()),
         provideFirestore(() => getFirestore()),
-        provideStorage(() => getStorage())
+        provideStorage(() => getStorage()),
+        MatPrefix
     ],
     providers: [
         provideClientHydration(),

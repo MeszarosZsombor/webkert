@@ -11,6 +11,7 @@ import { BonusesComponent } from './bonuses/bonuses.component';
 import {TableStickyFooterExample} from "../../shared/table/table.component";
 import {BuyBonusesDialog} from "../../shared/dialog/dialog-buy-bonuses.component";
 import {MatDivider} from "@angular/material/divider";
+import {MatPrefix} from "@angular/material/form-field";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {MatDivider} from "@angular/material/divider";
         TableStickyFooterExample,
         BuyBonusesDialog,
         MatDivider,
+        MatPrefix,
     ]
 })
 export class AccountModule { }

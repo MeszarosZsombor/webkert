@@ -1,22 +1,22 @@
 <mat-nav-list>
   <a mat-list-item routerLink="/login" (click)="close()" *ngIf="!loggedInUser">
-    <mat-icon>login</mat-icon>
+    <mat-icon matIconPrefix>login</mat-icon>
     <span>Bejelentkezés</span>
   </a>
   <a mat-list-item routerLink="/register" (click)="close()" *ngIf="!loggedInUser">
-    <mat-icon>app_registration</mat-icon>
+    <mat-icon matIconPrefix>app_registration</mat-icon>
     <span>Regisztráció</span>
   </a>
   <a mat-list-item routerLink="/login" (click)="close(true)" *ngIf="loggedInUser">
-    <mat-icon>logout</mat-icon>
+    <mat-icon matIconPrefix>logout</mat-icon>
     <span>Kijelentkezés</span>
   </a>
   <a mat-list-item routerLink="/main" (click)="close()">
-    <mat-icon>house</mat-icon>
+    <mat-icon matIconPrefix>house</mat-icon>
     <span>Főoldal</span>
   </a>
   <a mat-list-item routerLink="/account" (click)="close()"  *ngIf="loggedInUser">
-    <mat-icon>person</mat-icon>
+    <mat-icon matIconPrefix>person</mat-icon>
     <span>Fiókom</span>
   </a>
 </mat-nav-list>

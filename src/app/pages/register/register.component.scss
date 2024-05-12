@@ -7,6 +7,9 @@ div {
 }
 
 .main_component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
 }
 
@@ -26,4 +29,10 @@ form {
 
 button {
   width: 150px;
+}
+
+@media screen and (max-width: 900px) {
+  form{
+    width: 100%;
+  }
 }

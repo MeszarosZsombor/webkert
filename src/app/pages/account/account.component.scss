@@ -17,3 +17,9 @@ div {
 mat-card-content{
   text-align: left;
 }
+
+@media screen and (max-width: 900px) {
+  .account{
+    margin: 0;
+  }
+}
