@@ -15,6 +15,8 @@ import {AuthService} from "../services/auth.service";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
 import {Bonuses} from "../models/Bonuses";
 import {SelectionModel} from "@angular/cdk/collections";
+import {Transaction} from "../models/Transaction";
+import {TransactionService} from "../services/transaction.service";
 
 @Component({
   selector: 'dialog-animations-delete-dialog',
@@ -31,7 +33,8 @@ export class BuyBonusesAnimationsDialog {
     private userService: UserService,
     private authService: AuthService,
     private afAuth: AngularFireAuth,
-    private _snackBar: SnackBarComponent
+    private _snackBar: SnackBarComponent,
+    private transationService: TransactionService
   ) {
     this.uid = data.uid;
     this.selectedBonuses = data.selectedBonuses;
@@ -39,7 +42,19 @@ export class BuyBonusesAnimationsDialog {
 
   buyBonuses(selectedBonuses: Bonuses[]) {
     this.userService.buyBonuses(this.uid as string, selectedBonuses).then(() => {
-      this._snackBar.openSnackBar('Szolgáltatások sikeresen vásárolva/módosítva!', 'Rendben');
+      const tx: Transaction = {
+        userId: this.uid as string,
+        itemId: [],
+        cost: 0,
+        timestamp: new Date()
+      }
+
+      selectedBonuses.forEach(bonus => tx.itemId.push(bonus.id));
+      selectedBonuses.forEach(bonus => tx.cost += bonus.price);
+
+      this.transationService.create(tx).then(() => {
+        this._snackBar.openSnackBar('Szolgáltatások sikeresen vásárolva/módosítva!', 'Rendben');
+      });
     });
   }
 }
