@@ -4,10 +4,10 @@
     <mat-card-title>Szolgáltatások</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <table-sticky-footer></table-sticky-footer>
+    <table-sticky-footer (selectedBonusesChanged)="selectedBonuses = $event"></table-sticky-footer>
   </mat-card-content>
   <mat-card-actions>
-    <dialog-buy-bonuses></dialog-buy-bonuses>
+    <dialog-buy-bonuses [selectedBonuses]="selectedBonuses"></dialog-buy-bonuses>
   </mat-card-actions>
 </mat-card>
 </div>

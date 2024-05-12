@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {MatTableModule, MatTableDataSource} from '@angular/material/table';
 import {MainModule} from "../../pages/main/main.module";
 import {SelectionModel} from "@angular/cdk/collections";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {Bonuses} from "../models/Bonuses";
 import {BonusesService} from "../services/bonuses.service";
+import {UserService} from "../services/user.service";
 
 export interface Transaction {
   item: string;
@@ -23,18 +24,21 @@ export interface Transaction {
   imports: [MatTableModule, MainModule, MatCheckboxModule],
 })
 export class TableStickyFooterExample implements OnInit {
+  @Output() selectedBonusesChanged = new EventEmitter<Bonuses[]>();
+  @Output() selectionChanged = new EventEmitter<SelectionModel<Bonuses>>();
+
   displayedColumns = ['item', 'cost', 'select'];
+  userBonuses: string[] = [];
 
   bonuses: Bonuses[] = []; // Initialize bonuses array
 
   dataSource = new MatTableDataSource<Bonuses>(this.bonuses); // Use Bonus interface
   selection = new SelectionModel<Bonuses>(true, []); // Use Bonus interface
 
-  constructor(private bonusesService: BonusesService) {}
+  constructor(private bonusesService: BonusesService, private userService: UserService) {}
 
   /** Gets the total cost of all transactions. */
   getTotalCost() {
-    console.log(typeof (this.selection.selected.map(t => t.price).reduce((acc, value) => acc + value, 0)));
     return this.selection.selected.map(t => t.price).reduce((acc, value) => acc + value, 0);
   }
 
@@ -63,10 +67,26 @@ export class TableStickyFooterExample implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${Number(row.id)}`;
   }
 
-  ngOnInit() {
-    this.bonusesService.getAll().subscribe(bonuses => {
+  async ngOnInit() {
+    this.bonusesService.getAll().subscribe(async bonuses => {
       this.bonuses = bonuses;
       this.dataSource = new MatTableDataSource<Bonuses>(this.bonuses);
+
+      // Lekérjük a felhasználó által már megvásárolt bónuszokat
+      const user = localStorage.getItem('user');
+      const uid = JSON.parse(user as string).uid;
+      this.userBonuses = await this.userService.getUserBonuses(uid);
+
+      // Kijelöljük a már megvásárolt bónuszokat a SelectionModel-ben
+      this.bonuses.forEach(bonus => {
+        if (this.userBonuses.includes(bonus.id)) {
+          this.selection.select(bonus);
+        }
+      });
+    });
+
+    this.selection.changed.subscribe(() => {
+      this.selectedBonusesChanged.emit(this.selection.selected);
     });
   }
 }

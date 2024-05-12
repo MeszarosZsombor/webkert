@@ -7,12 +7,14 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from "@angular/material/dialog";
-import {Component, EventEmitter, Inject, Output} from "@angular/core";
+import {Component, EventEmitter, Inject, Input, Output} from "@angular/core";
 import {User} from "../models/User";
 import {MatButtonModule} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
 import {AuthService} from "../services/auth.service";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
+import {Bonuses} from "../models/Bonuses";
+import {SelectionModel} from "@angular/cdk/collections";
 
 @Component({
   selector: 'dialog-animations-delete-dialog',
@@ -22,18 +24,20 @@ import {AngularFireAuth} from "@angular/fire/compat/auth";
 })
 export class BuyBonusesAnimationsDialog {
   uid?: string;
+  selectedBonuses: Bonuses[] = [];
   constructor(
     public dialogRef: MatDialogRef<BuyBonusesDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: {uid: string},
+    @Inject(MAT_DIALOG_DATA) public data: {uid: string, selectedBonuses: Bonuses[]},
     private userService: UserService,
     private authService: AuthService,
     private afAuth: AngularFireAuth
   ) {
     this.uid = data.uid;
+    this.selectedBonuses = data.selectedBonuses;
   }
 
-  buyBonuses() {
-
+  buyBonuses(selectedBonuses: Bonuses[]) {
+    this.userService.buyBonuses(this.uid as string, selectedBonuses);
   }
 }
 
@@ -45,7 +49,8 @@ export class BuyBonusesAnimationsDialog {
   imports: [MatButtonModule],
 })
 export class BuyBonusesDialog {
-  @Output() delete = new EventEmitter<User>();
+  @Input() selection?: SelectionModel<Bonuses>;
+  @Input() selectedBonuses: Bonuses[] = [];
 
   constructor(public dialog: MatDialog) {
   }
@@ -53,14 +58,18 @@ export class BuyBonusesDialog {
   openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
     const user = localStorage.getItem('user');
     const uid = JSON.parse(user as string).uid;
-    if (uid) {
-      this.dialog.open(BuyBonusesAnimationsDialog, {
+    if (!this.selection) {
+      this.selection = new SelectionModel<Bonuses>(true, []);
+    }
+    console.log('selection: ', this.selectedBonuses);
+    this.dialog.open(BuyBonusesAnimationsDialog, {
         width: '250px',
         enterAnimationDuration,
         exitAnimationDuration,
-        data: {uid}
-      });
-    }
-    console.log(uid);
+        data: {
+          uid,
+          selectedBonuses: this.selectedBonuses
+        }
+    });
   }
 }

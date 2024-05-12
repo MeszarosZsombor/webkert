@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Bonuses} from "../../../shared/models/Bonuses";
 
 @Component({
   selector: 'app-bonuses',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './bonuses.component.scss'
 })
 export class BonusesComponent {
-
+  selectedBonuses: Bonuses[] = [];
 }

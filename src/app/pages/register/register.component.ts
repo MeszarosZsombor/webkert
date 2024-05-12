@@ -99,7 +99,7 @@ export class RegisterComponent {
         console.error(err);
       });
 
-      this.router.navigateByUrl('/main');
+      this.router.navigateByUrl('/account');
     }).catch(err => {
       console.error(err);
     });
