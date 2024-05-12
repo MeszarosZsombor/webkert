@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {AuthGuard} from "./shared/services/auth.guard";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import {AlreadyLoggedInGuard} from "./shared/services/logged-in.guard";
 
 const routes: Routes = [
     {
@@ -10,11 +11,13 @@ const routes: Routes = [
     },
     {
       path: 'login',
-      loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule)
+      loadChildren: () => import('./pages/login/login.module').then(m => m.LoginModule),
+      canActivate: [AlreadyLoggedInGuard]
     },
     {
       path: 'register',
-      loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule)
+      loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterModule),
+      canActivate: [AlreadyLoggedInGuard]
     },
     {
       path: 'account',

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
 import {merge} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
@@ -12,8 +12,9 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  loading: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router){
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.email, Validators.required]],
       password: ['', Validators.required]
@@ -42,13 +43,22 @@ export class LoginComponent {
     });
   }
 
-  async login() {
-    await this.authService.login(this.loginForm.value?.email, this.loginForm.value?.password).then(cred => {
-      this.router.navigateByUrl('/account');
-    }).catch(err => {
-      console.error(err);
-    });
+  login() {
+    this.loading = true;
+    setTimeout(async() => {
+      try {
+        await this.authService.login(this.loginForm.value?.email, this.loginForm.value?.password)
+        await this.router.navigateByUrl('/account');
+        this.loading = false
+      } catch (e) {
+
+
+        this.loading = false;
+        console.log(e);
+      }
+    }, 3000);
   }
+
 
   private getErrorMessage(controlName: string, errorName: string) {
     switch (controlName) {

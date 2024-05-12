@@ -22,11 +22,15 @@ mat-sidenav {
   width: 250px;
 }
 
+.main{
+  color: white;
+}
+
 .navigation-wrapper {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: end;
   padding-left: 10px;
+  width: 100%;
 }
 
 @media screen and (min-width: 576px) {

@@ -10,6 +10,7 @@ import {DeleteDialogAnimations} from "../../shared/dialog/dialog-delete.componen
 import { BonusesComponent } from './bonuses/bonuses.component';
 import {TableStickyFooterExample} from "../../shared/table/table.component";
 import {BuyBonusesDialog} from "../../shared/dialog/dialog-buy-bonuses.component";
+import {MatDivider} from "@angular/material/divider";
 
 
 @NgModule({
@@ -17,15 +18,16 @@ import {BuyBonusesDialog} from "../../shared/dialog/dialog-buy-bonuses.component
     AccountComponent,
     BonusesComponent
   ],
-  imports: [
-    CommonModule,
-    AccountRoutingModule,
-    MatCardModule,
-    MatButton,
-    MatIcon,
-    DeleteDialogAnimations,
-    TableStickyFooterExample,
-    BuyBonusesDialog,
-  ]
+    imports: [
+        CommonModule,
+        AccountRoutingModule,
+        MatCardModule,
+        MatButton,
+        MatIcon,
+        DeleteDialogAnimations,
+        TableStickyFooterExample,
+        BuyBonusesDialog,
+        MatDivider,
+    ]
 })
 export class AccountModule { }

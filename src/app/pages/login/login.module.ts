@@ -8,6 +8,7 @@ import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatButton} from "@angular/material/button";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {MatButton} from "@angular/material/button";
     MatLabel,
     MatPrefix,
     ReactiveFormsModule,
-    MatButton
+    MatButton,
+    MatProgressSpinnerModule
   ]
 })
 export class LoginModule { }

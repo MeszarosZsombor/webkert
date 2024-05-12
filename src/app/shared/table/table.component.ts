@@ -7,12 +7,6 @@ import {Bonuses} from "../models/Bonuses";
 import {BonusesService} from "../services/bonuses.service";
 import {UserService} from "../services/user.service";
 
-export interface Transaction {
-  item: string;
-  cost: number;
-  position: number;
-}
-
 /**
  * @title Table with a sticky footer
  */

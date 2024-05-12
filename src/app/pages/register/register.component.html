@@ -19,17 +19,23 @@
             <mat-icon matPrefix>lock</mat-icon>
             <input matInput type="password" formControlName="password" class="form-control" required />
             <mat-label>Jelszó</mat-label>
-          <mat-error *ngIf="registerForm.controls['password'].invalid || registerForm.hasError('mismatch')">
-            {{ registerForm.hasError('mismatch') ? 'A jelszavak nem egyeznek' : errorMessages.password }}
-          </mat-error>
+            <mat-error *ngIf="registerForm.controls['password'].invalid">
+              {{errorMessages.password}}
+            </mat-error>
+            <mat-error *ngIf="registerForm.hasError('mismatch')">
+              {{'A jelszavak nem egyeznek'}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field>
             <mat-icon matPrefix>lock</mat-icon>
             <input matInput type="password" formControlName="repassword" class="form-control" required>
             <mat-label>Jelszó megerősítése</mat-label>
-            <mat-error *ngIf="registerForm.controls['repassword'].invalid || registerForm.hasError('mismatch')">
-          {{ registerForm.hasError('mismatch') ? 'A jelszavak nem egyeznek' : errorMessages.repassword }}
-        </mat-error>
+            <mat-error *ngIf="registerForm.controls['repassword'].invalid">
+              {{errorMessages.repassword }}
+            </mat-error>
+            <mat-error *ngIf="registerForm.hasError('mismatch')">
+              {{'A jelszavak nem egyeznek'}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-icon matPrefix>face</mat-icon>

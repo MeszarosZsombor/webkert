@@ -46,10 +46,23 @@ export class RegisterComponent {
   }
 
   passwordMatchValidator(g: FormGroup) {
-    const password = g.get('password')?.value;
-    const repassword = g.get('repassword')?.value;
-    return password === repassword ? null : { mismatch: true };
+  const password = g.get('password')?.value;
+  const repasswordControl = g.get('repassword');
+  const repassword = repasswordControl?.value;
+
+  if (password !== repassword) {
+    repasswordControl?.setErrors({ ...repasswordControl?.errors, mismatch: true });
+    return { mismatch: true };
+  } else {
+    if (repasswordControl?.hasError('mismatch')) {
+      // @ts-ignore
+      delete repasswordControl?.errors['mismatch'];
+      // @ts-ignore
+      if (!Object.keys(repasswordControl?.errors).length) repasswordControl?.setErrors(null);
+    }
   }
+  return null;
+}
 
   private updateErrorMessage() {
     Object.keys(this.registerForm.controls).forEach(key => {
@@ -74,7 +87,13 @@ export class RegisterComponent {
       case 'password':
         return errorName === 'required' ? 'Password is required' : 'Password must be at least 6 characters';
       case 'repassword':
-        return errorName === 'required' ? 'Password confirmation is required' : 'Password confirmation must be at least 6 characters';
+        if (errorName === 'required') {
+          return 'Password confirmation is required';
+        } else if (errorName === 'mismatch') {
+          return 'Password confirmation does not match password';
+        } else {
+          return 'Password confirmation must be at least 6 characters';
+        }
       case 'name':
         return errorName === 'required' ? 'Name is required' : 'Name must be at least 3 characters';
       case 'phone':

@@ -9,13 +9,12 @@
           <mat-icon>menu</mat-icon>
         </button>
       </div>
-      <div>Telepont</div>
+      <div><a class="main" routerLink="/main">Telepont</a></div>
       <div class="navigation-wrapper">
         <ul class="navigation-items">
           <li *ngIf="!loggedInUser"><a routerLink="/login">Bejelentkezés</a></li>
           <li *ngIf="loggedInUser"><a routerLink="/login" (click)="logout()">Kijelentkezés</a></li>
           <li *ngIf="!loggedInUser"><a routerLink="/register">Regisztráció</a></li>
-          <li><a routerLink="/main">Főoldal</a></li>
           <li *ngIf="loggedInUser"><a routerLink="/account">Fiókom</a></li>
         </ul>
       </div>
