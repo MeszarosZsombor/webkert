@@ -39,6 +39,16 @@ export class UserService {
     }
   }
 
+  async getUserPackage(uid: string){
+    const doc = await this.afs.collection<User>(this.collection).doc(uid).get().toPromise();
+    if (doc?.exists) {
+      const user = doc.data() as User;
+      return user.package;
+    } else {
+      throw new Error('User does not exist');
+    }
+  }
+
   async buyBonuses(uid: string, selectedBonuses: Bonuses[]) {
     const doc = await this.afs.collection<User>(this.collection).doc(uid).get().toPromise();
     if (doc?.exists) {
@@ -60,6 +70,17 @@ export class UserService {
         return user.bonuses;
       } else {
         throw new Error('User does not exist');
+    }
+  }
+
+  async deletePackage(uid: string) {
+    const doc = await this.afs.collection<User>(this.collection).doc(uid).get().toPromise();
+    if(doc?.exists){
+      const user = doc.data() as User;
+      user.package = '';
+      return this.afs.collection<User>(this.collection).doc(uid).update(user);
+    } else {
+      throw new Error('User does not exist');
     }
   }
 }

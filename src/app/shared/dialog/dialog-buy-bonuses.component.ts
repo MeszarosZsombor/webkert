@@ -39,7 +39,7 @@ export class BuyBonusesAnimationsDialog {
 
   buyBonuses(selectedBonuses: Bonuses[]) {
     this.userService.buyBonuses(this.uid as string, selectedBonuses).then(() => {
-      this._snackBar.openSnackBar('Szolgáltatások sikeresen vásárolva/módosítva', 'Rendben');
+      this._snackBar.openSnackBar('Szolgáltatások sikeresen vásárolva/módosítva!', 'Rendben');
     });
   }
 }

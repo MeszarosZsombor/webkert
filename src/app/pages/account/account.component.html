@@ -7,7 +7,7 @@
       <mat-card-content>
         <p><mat-icon>email</mat-icon>{{ user?.email }}</p>
         <p><mat-icon>phone</mat-icon>{{ user?.phone }}</p>
-        <p><mat-icon>list_alt</mat-icon>{{ user?.package == null ? "Jelenleg nincsen mobilcsomagod!" : user?.package }}</p>
+        <p><mat-icon>list_alt</mat-icon>{{ user?.package == "" ? "Jelenleg nincsen mobilcsomagod!" : user?.package }}</p>
       </mat-card-content>
       <mat-card-actions>
         <dialog-delete></dialog-delete>

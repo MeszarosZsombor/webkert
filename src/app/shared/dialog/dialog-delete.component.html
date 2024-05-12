@@ -1,1 +1,2 @@
-<button mat-raised-button color="warn" (click)="openDialog('300ms', '250ms')">Törlés</button>
+<button mat-raised-button color="warn" (click)="openDeleteUserDialog('300ms', '250ms')">Törlés</button>
+<button *ngIf="userPackage" mat-raised-button color="accent" (click)="openDeletePackageDialog('300ms', '250ms')">Mobilcsomag törlése</button>

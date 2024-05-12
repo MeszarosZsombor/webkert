@@ -18,6 +18,7 @@ import { getStorage, provideStorage } from '@angular/fire/storage';
 import {environment} from "./environment/environment";
 import {AngularFireModule} from "@angular/fire/compat";
 import {SnackBarComponent} from "./shared/snack-bar/snack-bar.component";
+import {DeleteDialogAnimations} from "./shared/dialog/dialog-delete.component";
 
 @NgModule({
     declarations: [
@@ -43,7 +44,8 @@ import {SnackBarComponent} from "./shared/snack-bar/snack-bar.component";
     providers: [
         provideClientHydration(),
         provideAnimationsAsync(),
-        SnackBarComponent
+        SnackBarComponent,
+        DeleteDialogAnimations
     ],
     bootstrap: [AppComponent]
 })

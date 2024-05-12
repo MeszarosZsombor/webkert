@@ -29,6 +29,8 @@ export class TableStickyFooterExample implements OnInit {
 
   displayedColumns = ['item', 'cost', 'select'];
   userBonuses: string[] = [];
+  user = localStorage.getItem('user');
+  uid = JSON.parse(this.user as string).uid;
 
   bonuses: Bonuses[] = []; // Initialize bonuses array
 
@@ -67,26 +69,40 @@ export class TableStickyFooterExample implements OnInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${Number(row.id)}`;
   }
 
-  async ngOnInit() {
-    this.bonusesService.getAll().subscribe(async bonuses => {
-      this.bonuses = bonuses;
-      this.dataSource = new MatTableDataSource<Bonuses>(this.bonuses);
+  ngOnInit() {
+    this.bonusesService.getAllOrderByPrice(this.uid).subscribe(bonuses => {
 
-      // Lekérjük a felhasználó által már megvásárolt bónuszokat
       const user = localStorage.getItem('user');
       const uid = JSON.parse(user as string).uid;
-      this.userBonuses = await this.userService.getUserBonuses(uid);
+      this.userService.getUserBonuses(uid).then(userBonuses => {
+        this.userBonuses = userBonuses;
 
-      // Kijelöljük a már megvásárolt bónuszokat a SelectionModel-ben
-      this.bonuses.forEach(bonus => {
-        if (this.userBonuses.includes(bonus.id)) {
-          this.selection.select(bonus);
-        }
+        this.bonuses = bonuses.sort((a, b) => {
+          const aIsOwned = this.userBonuses.includes(a.id);
+          const bIsOwned = this.userBonuses.includes(b.id);
+
+          if (aIsOwned && !bIsOwned) {
+            return -1;
+          } else if (!aIsOwned && bIsOwned) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+
+        this.dataSource = new MatTableDataSource<Bonuses>(this.bonuses);
+
+        this.bonuses.forEach(bonus => {
+          if (this.userBonuses.includes(bonus.id)) {
+            this.selection.select(bonus);
+          }
+        });
+
+        this.selection.changed.subscribe(() => {
+          this.selectedBonusesChanged.emit(this.selection.selected);
+        });
+
       });
-    });
-
-    this.selection.changed.subscribe(() => {
-      this.selectedBonusesChanged.emit(this.selection.selected);
     });
   }
 }

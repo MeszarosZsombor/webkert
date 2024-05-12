@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Package} from "../../shared/models/Package";
 import {PackageService} from "../../shared/services/package.service";
 import {Observable} from "rxjs";
@@ -10,7 +10,7 @@ import {BuyPackageDialogAnimationsDialog} from "../../shared/dialog/dialog.compo
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
   packages?: Observable<Package[]>;
   selectedPackage?: Package;
 
@@ -18,7 +18,7 @@ export class MainComponent {
   }
 
   ngOnInit() {
-    this.packages = this.packageService.getAll()
+    this.packages = this.packageService.getAllOrderByPrice()
   }
 
   selectPackage(phonePackage: Package) {
@@ -28,10 +28,6 @@ export class MainComponent {
   buyPackage(phonePackage: Package) {
     const dialogRef = this.dialog.open(BuyPackageDialogAnimationsDialog, {
       data: { phonePackage: phonePackage }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
     });
   }
 }

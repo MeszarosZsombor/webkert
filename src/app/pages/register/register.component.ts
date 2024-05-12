@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../shared/services/auth.service";
 import {User} from "../../shared/models/User";
 import {UserService} from "../../shared/services/user.service";
+import {SnackBarComponent} from "../../shared/snack-bar/snack-bar.component";
 
 @Component({
   selector: 'app-register',
@@ -25,7 +26,11 @@ export class RegisterComponent {
     phone: ''
   };
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private authService: AuthService, private userService: UserService) {
+  constructor(private formBuilder: FormBuilder,
+              private router: Router,
+              private authService: AuthService,
+              private userService: UserService,
+              private _snackbar: SnackBarComponent) {
     this.registerForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
@@ -89,12 +94,12 @@ export class RegisterComponent {
         username: this.registerForm.value.username,
         name: this.registerForm.value.name,
         phone: this.registerForm.value.phone,
-        package: null,
+        package: "",
         bonuses: []
       };
 
       this.userService.create(user).then(_ => {
-        console.log('User created');
+        this._snackbar.openSnackBar('Sikeres regisztráció!', 'Rendben');
       }).catch(err => {
         console.error(err);
       });

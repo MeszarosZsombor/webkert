@@ -19,6 +19,10 @@ export class PackageService {
     return this.afs.collection<Package>(this.collection).valueChanges();
   }
 
+  getAllOrderByPrice() {
+    return this.afs.collection<Package>(this.collection, ref => ref.orderBy('price')).valueChanges();
+  }
+
   getById(id: string){
     return this.afs.collection<Package>(this.collection).doc(id).valueChanges();
   }
