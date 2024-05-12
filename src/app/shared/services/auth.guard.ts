@@ -9,9 +9,7 @@ import {isPlatformBrowser} from "@angular/common";
 export class AuthGuard {
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router) {
   }
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(){
 
     if (isPlatformBrowser(this.platformId)) {
       const user = JSON.parse(localStorage.getItem('user') as string);

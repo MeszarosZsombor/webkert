@@ -3,7 +3,6 @@ import {MatSidenav} from "@angular/material/sidenav";
 import {Router, NavigationEnd} from "@angular/router";
 import {filter} from "rxjs";
 import {AuthService} from "./shared/services/auth.service";
-import {extractRoutes} from "@angular-devkit/build-angular/src/utils/routes-extractor/extractor";
 import {isPlatformBrowser} from "@angular/common";
 
 @Component({

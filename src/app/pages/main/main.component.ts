@@ -12,7 +12,6 @@ import {BuyPackageDialogAnimationsDialog} from "../../shared/dialog/dialog.compo
 })
 export class MainComponent implements OnInit {
   packages?: Observable<Package[]>;
-  selectedPackage?: Package;
 
   constructor(private packageService: PackageService, public dialog: MatDialog) {
   }
@@ -21,12 +20,9 @@ export class MainComponent implements OnInit {
     this.packages = this.packageService.getAllOrderByPrice()
   }
 
-  selectPackage(phonePackage: Package) {
-    this.selectedPackage = phonePackage;
-  }
 
   buyPackage(phonePackage: Package) {
-    const dialogRef = this.dialog.open(BuyPackageDialogAnimationsDialog, {
+    this.dialog.open(BuyPackageDialogAnimationsDialog, {
       data: { phonePackage: phonePackage }
     });
   }

@@ -28,11 +28,8 @@ export class BuyBonusesAnimationsDialog {
   uid?: string;
   selectedBonuses: Bonuses[] = [];
   constructor(
-    public dialogRef: MatDialogRef<BuyBonusesDialog>,
     @Inject(MAT_DIALOG_DATA) public data: {uid: string, selectedBonuses: Bonuses[]},
     private userService: UserService,
-    private authService: AuthService,
-    private afAuth: AngularFireAuth,
     private _snackBar: SnackBarComponent,
     private transationService: TransactionService
   ) {

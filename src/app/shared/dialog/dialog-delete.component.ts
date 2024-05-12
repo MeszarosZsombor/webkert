@@ -4,7 +4,6 @@ import {
   MatDialog,
   MatDialogActions,
   MatDialogClose, MatDialogContent,
-  MatDialogRef,
   MatDialogTitle
 } from "@angular/material/dialog";
 import {Component, EventEmitter, Inject, Output} from "@angular/core";
@@ -13,7 +12,6 @@ import {MatButtonModule} from "@angular/material/button";
 import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../services/auth.service";
 import {AngularFireAuth} from "@angular/fire/compat/auth";
-import {error} from "@angular/compiler-cli/src/transformers/util";
 import {NgIf} from "@angular/common";
 import {SnackBarComponent} from "../snack-bar/snack-bar.component";
 
@@ -26,7 +24,6 @@ import {SnackBarComponent} from "../snack-bar/snack-bar.component";
 export class DeleteUserAnimationsDialog {
   uid?: string;
   constructor(
-    public dialogRef: MatDialogRef<DeleteDialogAnimations>,
     @Inject(MAT_DIALOG_DATA) public data: {uid: string},
     private userService: UserService,
     private authService: AuthService,
@@ -38,12 +35,12 @@ export class DeleteUserAnimationsDialog {
   deleteUser() {
     if (this.uid) {
       this.userService.delete(this.uid).then(() => {
-        console.log('User deleted successfully from database');
         this.afAuth.currentUser.then(user => {
           if (user) {
             user.delete().then(() => {
-              console.log('User deleted successfully from Firebase Authentication');
-              this.authService.logout();
+              this.authService.logout().then(() => {
+                localStorage.setItem('user', 'null' as string);
+              });
             }).catch(error => {
               console.error('Error deleting user from Firebase Authentication', error);
             });
@@ -65,7 +62,6 @@ export class DeleteUserAnimationsDialog {
 export class DeletePackageAnimationsDialog {
   uid?: string;
   constructor(
-    public dialogRef: MatDialogRef<DeleteDialogAnimations>,
     @Inject(MAT_DIALOG_DATA) public data: {uid: string},
     private userService: UserService,
     private router: Router,
@@ -79,7 +75,7 @@ export class DeletePackageAnimationsDialog {
       this.userService.deletePackage(this.uid).then(() => {
         this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           this.router.navigate(['/account']);
-          this._snackbar.openSnackBar('Csomag sikeresen törölve!', 'Rendben');
+          this._snackbar.openSnackBar('Mobilcsomag sikeresen törölve!', 'Rendben');
         });
       });
     }

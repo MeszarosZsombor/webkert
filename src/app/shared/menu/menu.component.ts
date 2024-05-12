@@ -1,5 +1,4 @@
-import { Component, OnInit, AfterViewInit, EventEmitter, Output, Input } from '@angular/core';
-import {log} from "util";
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
@@ -13,10 +12,6 @@ export class MenuComponent{
   @Output() selectedPage: EventEmitter<string> = new EventEmitter();
   @Output() onCloseSidenav: EventEmitter<boolean> = new EventEmitter();
   @Output() onLogout: EventEmitter<boolean> = new EventEmitter();
-
-  menuSwitch() {
-    this.selectedPage.emit(this.currentPage);
-  }
 
   close(logout?: boolean) {
     if(logout) {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ValidationErrors, Validators} from "@angular/forms";
-import {merge} from "rxjs";
+import {merge, Observable, take} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {Router} from "@angular/router";
 import {AuthService} from "../../shared/services/auth.service";
@@ -105,40 +105,44 @@ export class RegisterComponent {
 
   async register() {
     this.loading = true;
-    setTimeout(async() => {
-      this.userService.checkEmailExists(this.registerForm.value.email).subscribe(exists => {
-        if (exists) {
-          this._snackbar.openSnackBar('Ez az email cím már regisztrálva van!', 'Rendben');
-          return;
-        }
 
-        this.authService.register(this.registerForm.value?.email, this.registerForm.value?.password).then(cred => {
-          console.log(cred);
+    if(this.registerForm.invalid) {
+      this.loading = false;
+      return;
+    }
 
-          const user: User = {
-            id: cred.user?.uid as string,
-            email: this.registerForm.value.email,
-            username: this.registerForm.value.username,
-            name: this.registerForm.value.name,
-            phone: this.registerForm.value.phone,
-            package: "",
-            bonuses: []
-          };
+    this.userService.checkEmailExists(this.registerForm.value.email).pipe(take(1)).subscribe(users => {
+      if(users.length > 0) {
+        this.loading = false;
+        this._snackbar.openSnackBar('Ez az email cím már regisztrálva van!', 'Rendben');
+        return;
+      }
 
-          this.userService.create(user).then(_ => {
-            this.loading = false;
-            this._snackbar.openSnackBar('Sikeres regisztráció!', 'Rendben');
-          }).catch(err => {
-            this.loading = false;
-            console.error(err);
-          });
+      this.authService.register(this.registerForm.value?.email, this.registerForm.value?.password).then(cred => {
 
+        const user: User = {
+          id: cred.user?.uid as string,
+          email: this.registerForm.value.email,
+          username: this.registerForm.value.username,
+          name: this.registerForm.value.name,
+          phone: this.registerForm.value.phone,
+          package: "",
+          bonuses: []
+        };
+
+        this.userService.create(user).then(_ => {
           this.router.navigateByUrl('/account');
+          this.loading = false;
+          this._snackbar.openSnackBar('Sikeres regisztráció!', 'Rendben');
         }).catch(err => {
           this.loading = false;
           console.error(err);
         });
+
+      }).catch(err => {
+        this.loading = false;
+        console.error(err);
       });
-    }, 3000);
+    });
   }
 }

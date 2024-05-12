@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {AngularFirestore} from "@angular/fire/compat/firestore";
 import {User} from "../models/User";
 import {Bonuses} from "../models/Bonuses";
-import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -30,10 +29,8 @@ export class UserService {
   }
 
   async addPackageToUser(uid: string, packageId: string) {
-    // Lekérdezzük a felhasználót az adatbázisból
     const doc = await this.afs.collection<User>(this.collection).doc(uid).get().toPromise();
     if (doc?.exists) {
-      // Ha a felhasználó létezik, akkor hozzárendeljük a csomag ID-jét a package tulajdonsághoz
       return this.afs.collection<User>(this.collection).doc(uid).update({package: packageId});
     } else {
       throw new Error('User does not exist');
@@ -85,11 +82,7 @@ export class UserService {
     }
   }
 
-  checkEmailExists(email: string): Observable<boolean>{
-    return new Observable<boolean>(subscriber => {
-      this.afs.collection<User>(this.collection, ref => ref.where('email', '==', email)).valueChanges().subscribe(users => {
-        subscriber.next(users.length > 0);
-      });
-    });
+  checkEmailExists(email: string) {
+    return this.afs.collection<User>(this.collection, ref => ref.where('email', '==', email)).valueChanges();
   }
 }
